@@ -150,4 +150,11 @@ config HWINFO_ANDES
 	help
 	  Enable Andes hwinfo driver
 
+config HWINFO_CC32XX
+	bool "TI CC32XX hwinfo"
+	default y
+	depends on SOC_SERIES_CC32XX
+	help
+	  Enable TI CC32XX hwinfo driver.
+
 endif
