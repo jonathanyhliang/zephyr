@@ -1,0 +1,5 @@
+description: Texas Instruments CC32xx flash controller
+
+compatible: "ti,cc32xx-flash-controller"
+
+include: flash-controller.yaml

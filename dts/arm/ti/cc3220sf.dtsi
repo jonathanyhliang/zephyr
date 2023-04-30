@@ -16,8 +16,18 @@
 		reg = <0x0 DT_SIZE_K(1024)>;
 	};
 
-	flash1: flash@1000000 {
-		compatible = "soc-nv-flash";
-		reg = <0x01000000 DT_SIZE_K(1024)>;
+	flash_controller: flash-controller@400fd000 {
+		compatible = "ti,cc32xx-flash-controller";
+		reg = <0x400fd000 0x180>;
+
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		flash1: flash@1000000 {
+			compatible = "soc-nv-flash";
+			reg = <0x01000000 DT_SIZE_K(1024)>;
+			erase-block-size = <DT_SIZE_K(2)>;
+			write-block-size = <4>;
+		};
 	};
 };
