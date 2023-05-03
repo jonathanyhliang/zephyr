@@ -105,6 +105,7 @@ static int32_t configure_simplelink(void)
 
 	/* Turn on NWP */
 	mode = sl_Start(0, 0, 0);
+	__ASSERT_PRINT("sl_Start return mode = %d\n", mode);
 	ASSERT_ON_ERROR(mode, DEVICE_ERROR);
 
 	if (mode != ROLE_STA) {

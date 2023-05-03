@@ -27,7 +27,7 @@ void main(void)
 	LOG_INF("Hawkbit sample app started");
 	LOG_INF("Image build time: " __DATE__ " " __TIME__);
 
-	app_dhcpv4_startup();
+	// app_dhcpv4_startup();
 
 #if defined(CONFIG_NET_SOCKETS_SOCKOPT_TLS)
 	tls_credential_add(CA_CERTIFICATE_TAG, TLS_CREDENTIAL_CA_CERTIFICATE,

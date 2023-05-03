@@ -12,7 +12,7 @@ menuconfig HAWKBIT
 	depends on IMG_MANAGER
 	depends on NETWORKING
 	depends on HTTP_CLIENT
-	depends on DNS_RESOLVER
+	# depends on DNS_RESOLVER
 	depends on JSON_LIBRARY
 	depends on NET_SOCKETS_POSIX_NAMES
 	depends on BOOTLOADER_MCUBOOT

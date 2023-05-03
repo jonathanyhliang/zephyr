@@ -24,7 +24,7 @@ LOG_MODULE_REGISTER(hawkbit, CONFIG_HAWKBIT_LOG_LEVEL);
 #include <zephyr/sys/reboot.h>
 #include <zephyr/drivers/flash.h>
 #include <zephyr/net/http/client.h>
-#include <zephyr/net/dns_resolve.h>
+// #include <zephyr/net/dns_resolve.h>
 #include <zephyr/logging/log_ctrl.h>
 #include <zephyr/storage/flash_map.h>
 
