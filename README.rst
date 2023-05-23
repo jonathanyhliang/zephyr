@@ -1,5 +1,6 @@
-.. raw:: html
+This Zephyr project fork aims to implement the following applications:
 
+<<<<<<< HEAD
    <a href="https://www.zephyrproject.org">
      <p align="center">
        <picture>
@@ -110,3 +111,7 @@ Additional Resources
 .. _Security Advisories Repository: https://github.com/zephyrproject-rtos/zephyr/security
 .. _Tips when asking for help: https://docs.zephyrproject.org/latest/develop/getting_started/index.html#asking-for-help
 .. _Zephyr Tech Talks: https://www.zephyrproject.org/tech-talks
+=======
+* **SLCAN**: https://github.com/jonathanyhliang/zephyr/tree/slcan/samples/drivers/can/slcan
+* **Hawkbit FOTA** https://github.com/jonathanyhliang/zephyr/tree/cc32xx-hawkbit-bringup/samples/subsys/mgmt/hawkbit
+>>>>>>> 570ad939db3 (Rewrite README.rst for navigating to the application repos of this zephyr fork)
