@@ -8,6 +8,7 @@
 #include <zephyr/sys/byteorder.h>
 
 #include <zephyr/console/console.h>
+#include <zephyr/sys/reboot.h>
 
 /* controller area network (CAN) kernel definitions */
 
@@ -375,6 +376,11 @@ void slcan_decaps(char *s)
 			if (ret != 0) {
 				printf("slcan: failed to enqueue CAN frame (err %d)\n", ret);
 			}
+		}
+		break;
+	case 'b':
+		if (!strncmp(s, "bbbbbb\r", 6U)) {
+			sys_reboot(SYS_REBOOT_COLD);
 		}
 		break;
 	default:
