@@ -1,0 +1,26 @@
+# SLCAN configuration options
+
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig SLCAN
+	bool "Serial-Line CAN"
+	select CAN
+	select POLL
+	help
+	  Enable Serial-Line CAN sub sub-system.
+
+if SLCAN
+
+module = SLCAN
+module-str = SLCAN
+source "subsys/logging/Kconfig.template.log_config"
+
+config SLCAN_LOOPBACK_MODE
+	bool "Serial-Line CAN Loopback mode"
+	default n
+	help
+	  Set the controller to loopback mode.
+	  This allows testing without a second board.
+
+endif # SLCAN
+	  

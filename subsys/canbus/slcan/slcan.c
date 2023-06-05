@@ -6,8 +6,6 @@
 #include <zephyr/drivers/can.h>
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/sys/byteorder.h>
-
-#include <zephyr/console/console.h>
 #include <zephyr/sys/reboot.h>
 
 /* controller area network (CAN) kernel definitions */
@@ -254,7 +252,7 @@ static int slcan_bump_filter(char *s, struct can_filter *filter)
 }
 
 /* Encapsulate one can_frame and stuff into a TTY queue. */
-static void slcan_encaps(char *s, struct can_frame *frame)
+void slcan_encaps(char *s, struct can_frame *frame)
 {
 	int i;
 	unsigned char *pos = s;
@@ -318,7 +316,7 @@ static void can_frame_rx_work_handler(struct k_work *work)
 	}
 }
 
-void slcan_decaps(char *s)
+int slcan_decaps(char *s)
 {
 	int ret = -EINVAL;
     char *endptr;
@@ -387,6 +385,31 @@ void slcan_decaps(char *s)
 		printf("slcan: failed to parse frame type (%c).", *s);
 		break;
     }
+
+	return ret;
+}
+
+char *slcan_getline(char c)
+{
+    static char ln[CONFIG_CONSOLE_INPUT_MAX_LINE_LEN];
+    static int pos = 0;
+
+	if (c != '\0') {
+		ln[pos] = c;
+		pos++;
+		if (pos >= CONFIG_CONSOLE_INPUT_MAX_LINE_LEN) {
+			pos = 0;
+		} else  if (pos >= 1) {
+			if (ln[pos-1] == '\r') {
+				ln[pos] = '\0';
+				return ln;
+			}
+		}
+	} else {
+		pos = 0;
+	}
+
+	return NULL;
 }
 
 int slcan_init(void)
