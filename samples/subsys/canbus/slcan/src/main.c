@@ -20,7 +20,7 @@ void main(void)
 
     while (1) {
         s = slcan_getline((char)console_getchar());
-        if (!s) {
+        if (s) {
             (void)slcan_decaps(s);
         }
     }

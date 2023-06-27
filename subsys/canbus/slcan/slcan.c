@@ -402,6 +402,7 @@ char *slcan_getline(char c)
 		} else  if (pos >= 1) {
 			if (ln[pos-1] == '\r') {
 				ln[pos] = '\0';
+				pos = 0;
 				return ln;
 			}
 		}
@@ -443,7 +444,7 @@ int slcan_init(void)
 		return -ENODEV;
 	}
 
-#ifdef CONFIG_LOOPBACK_MODE
+#ifdef CONFIG_SLCAN_LOOPBACK_MODE
 	ret = can_set_mode(can_dev, CAN_MODE_LOOPBACK);
 	if (ret != 0) {
 		printf("slcan: error setting CAN mode [%d]\n", ret);
