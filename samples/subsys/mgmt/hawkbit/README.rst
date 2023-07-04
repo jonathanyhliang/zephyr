@@ -7,7 +7,7 @@ Overview
 ********
 This branch of ``Hawkbit`` sample application leverages the forked origin one
 and aims to bring up `CC3220SF LaunchXL <https://docs.zephyrproject.org/latest/boards/arm/cc3220sf_launchxl/doc/index.html>`_ board to run the application. See
-`READMDE <https://github.com/jonathanyhliang/zephyr/tree/fork/samples/subsys/mgmt/hawkbit>`_
+`README <https://github.com/jonathanyhliang/zephyr/tree/fork/samples/subsys/mgmt/hawkbit>`_
 of the forked origin version for more detail about ``Hawkbit``.
 
 This branch of sample application makes below changes from the fored orgin version:
@@ -22,5 +22,5 @@ Building and Running
 
 Building, flashing and running ``Hawkbit`` application on ``CC3220SF LaunchXL`` board
 remains the sample as the forked orign version. Refer to the original
-`READMDE <https://github.com/jonathanyhliang/zephyr/tree/fork/samples/subsys/mgmt/hawkbit>`_
+`README <https://github.com/jonathanyhliang/zephyr/tree/fork/samples/subsys/mgmt/hawkbit>`_
 for more detail.
