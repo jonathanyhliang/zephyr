@@ -13,15 +13,25 @@
 #include <zephyr/net/socket.h>
 
 #include <zephyr/logging/log.h>
+
+#include <zephyr/drivers/pwm.h>
+
 LOG_MODULE_REGISTER(tcp_modbus, LOG_LEVEL_INF);
 
+static const struct pwm_dt_spec pwm_led0 = PWM_DT_SPEC_GET(DT_ALIAS(pwm_led0));
+
+#define NUM_STEPS	50U
+#define SLEEP_MSEC	25U
+
 #define MODBUS_TCP_PORT 502
+
+extern int init_usb(void);
 
 static uint16_t holding_reg[8];
 static uint8_t coils_state;
 
 static const struct gpio_dt_spec led_dev[] = {
-	GPIO_DT_SPEC_GET(DT_ALIAS(led0), gpios),
+	// GPIO_DT_SPEC_GET(DT_ALIAS(led0), gpios),
 	GPIO_DT_SPEC_GET(DT_ALIAS(led1), gpios),
 	GPIO_DT_SPEC_GET(DT_ALIAS(led2), gpios),
 };
@@ -66,6 +76,12 @@ MODBUS_CUSTOM_FC_DEFINE(custom, custom_handler, 101, &custom_read_count);
 static int init_leds(void)
 {
 	int err;
+
+	if (!pwm_is_ready_dt(&pwm_led0)) {
+		printk("Error: PWM device %s is not ready\n",
+		       pwm_led0.dev->name);
+		return 0;
+	}
 
 	for (int i = 0; i < ARRAY_SIZE(led_dev); i++) {
 		if (!gpio_is_ready_dt(&led_dev[i])) {
@@ -138,6 +154,9 @@ static int holding_reg_rd(uint16_t addr, uint16_t *reg)
 
 static int holding_reg_wr(uint16_t addr, uint16_t reg)
 {
+	uint32_t pulse_width;
+	int ret;
+
 	if (addr >= ARRAY_SIZE(holding_reg)) {
 		return -ENOTSUP;
 	}
@@ -145,6 +164,18 @@ static int holding_reg_wr(uint16_t addr, uint16_t reg)
 	holding_reg[addr] = reg;
 
 	LOG_INF("Holding register write, addr %u", addr);
+
+	if (holding_reg[0] >= 100u) {
+		pulse_width = pwm_led0.period;
+	} else {
+		pulse_width = (uint32_t)((uint64_t)holding_reg[0] * pwm_led0.period / 100);
+	}
+
+	ret = pwm_set_pulse_dt(&pwm_led0, pulse_width);
+	if (ret) {
+		printk("Error %d: failed to set pulse width\n", ret);
+		return 0;
+	}
 
 	return 0;
 }
@@ -266,6 +297,8 @@ int main(void)
 	int serv;
 	struct sockaddr_in bind_addr;
 	static int counter;
+
+	init_usb();
 
 	if (init_modbus_server()) {
 		LOG_ERR("Modbus TCP server initialization failed");

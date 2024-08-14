@@ -6,3 +6,4 @@ find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 project(modbus-tcp-server)
 
 target_sources(app PRIVATE src/main.c)
+target_sources_ifdef(CONFIG_USB_DEVICE_STACK app PRIVATE src/usb.c)
